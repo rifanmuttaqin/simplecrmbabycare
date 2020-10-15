@@ -1,0 +1,54 @@
+<aside id="sidebar-wrapper">
+    <div class="sidebar-brand">
+    <a href="{{route('home')}}">BABY SPA</a>
+    </div>
+    <div class="sidebar-brand sidebar-brand-sm">
+    <a href="{{route('home')}}">BS</a>
+    </div>
+    <ul class="sidebar-menu">
+
+        <li>
+            <a class="nav-link" href="{{route('home')}}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+        </li>
+
+        <li>
+            <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Transaksi Import</span></a>
+        </li>
+
+        <li>
+            <a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> <span>Shopee Pay Import</span></a>
+        </li>
+
+        <li>
+            <a class="nav-link" href="#"><i class="fas fa-male"></i> <span>Database Customer</span></a>
+        </li>
+
+        <li>
+            <a class="nav-link" href="#"><i class="fas fa-barcode"></i> <span>Cetak Label</span></a>
+        </li>
+
+        <li class="nav-item dropdown">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file"></i> <span>Laporan</span></a>
+        <ul class="dropdown-menu">
+            <li><a class="nav-link" href="#">Daftar Transaksi</a></li>
+        </ul>
+        </li>
+
+
+        <li class="nav-item dropdown">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>User</span></a>
+        <ul class="dropdown-menu">
+            <li><a class="nav-link" href="{{route('index-user')}}">Kelola User</a></li>
+        </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cog"></i> <span>Pengaturan</span></a>
+        <ul class="dropdown-menu">
+            <li><a class="nav-link" href="#">Kelola Toko</a></li>
+        </ul>
+        </li>
+
+    
+    </ul>
+</aside>
