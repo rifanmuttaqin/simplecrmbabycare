@@ -12,28 +12,20 @@
         </li>
 
         <li>
-            <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Transaksi Import</span></a>
+            <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a>
         </li>
 
+       
         <li>
-            <a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> <span>Shopee Pay Import</span></a>
-        </li>
-
-        <li>
-            <a class="nav-link" href="#"><i class="fas fa-male"></i> <span>Database Customer</span></a>
-        </li>
-
-        <li>
-            <a class="nav-link" href="#"><i class="fas fa-barcode"></i> <span>Cetak Label</span></a>
+            <a class="nav-link" href="{{ route('customer') }}"><i class="fas fa-male"></i> <span>Customer</span></a>
         </li>
 
         <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file"></i> <span>Laporan</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="#">Daftar Transaksi</a></li>
+            <li><a class="nav-link" href="#">Transaksi</a></li>
         </ul>
         </li>
-
 
         <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>User</span></a>
