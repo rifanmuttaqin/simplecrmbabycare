@@ -179,55 +179,9 @@ function clearAll()
 
 function btnDel(iduser)
 {
-  var url = '{{route("customer-delete")}}';
-  swalConfrim("Menghapus Data","Data yang telah dihapus tidak dapat untuk dikembalikan",iduser,url);
-}
-
-function swalConfrim(pesan_title,pesan_body,dataid,url)
-{
-  swal({
-    title: pesan_title,
-    text: pesan_body, 
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) { setAjaxInsert(url,dataid); $('.modal').modal('hide'); }
-  });
-}
-
-
-function setAjaxInsert(url_nya,param)
-{
-  $.ajax({
-      type:'POST',
-      url: url_nya,
-      data:{"_token": "{{ csrf_token() }}", param},
-      success:function(data) {
-        if(data.status != false)
-        {
-          table.ajax.reload();
-          swal(data.message, { button:false, icon: "success", timer: 1000});
-          clearAll();
-        }
-        else
-        {
-          swal(data.message, { button:false, icon: "error", timer: 1000});
-        }
-      },
-      error: function(error) {
-        var err = eval("(" + error.responseText + ")");
-        var array_1 = $.map(err, function(value, index) {
-            return [value];
-        });
-        var array_2 = $.map(array_1, function(value, index) {
-            return [value];
-        });
-        var message = JSON.stringify(array_2);
-        swal(message, { button:false, icon: "error", timer: 1000});
-      }
-    });
+  var url   = '{{route("customer-delete")}}';
+  var token = "{{ csrf_token() }}";
+  swalConfrim("Menghapus Data","Data yang telah dihapus tidak dapat untuk dikembalikan",iduser,url,token);
 }
 
 $(function () {
@@ -276,16 +230,19 @@ $(function () {
   $( "#prosess" ).click(function() {
     
     var param = null;
+    var token = null;
     var url   = "{{route('customer-store')}}";
     
-    param = { 
+    param     = { 
       nama :$('#nama').val(), 
       alamat_lengkap :$('#alamat_lengkap').val(), 
       telfon:$('#telfon').val(),
       tgl_lahir:$('#tgl_lahir').val()
     };
 
-    setAjaxInsert(url, param);
+    token    = "{{ csrf_token() }}";
+
+    setAjaxInsert(url, param, token);
 
     $('#createModal').modal('toggle');
 
