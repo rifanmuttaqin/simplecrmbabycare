@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 $router->group(['prefix' => ''], function () use ($router) {
     $router->get('/',  ['as'=>'customer','uses' => 'CustomerController@index']);
+    $router->post('/store',  ['as'=>'customer-store','uses' => 'CustomerController@store']);
+    $router->post('/update',  ['as'=>'customer-update','uses' => 'CustomerController@update']);
+    $router->post('/destroy',  ['as'=>'customer-delete','uses' => 'CustomerController@destroy']);
 });

@@ -17,7 +17,7 @@ class TblCustomer extends Migration
             $table->bigIncrements('id', 20);
             $table->string('nama');
             $table->string('alamat_lengkap');
-            $table->string('telfon')->nullable()->unique();
+            $table->string('telfon');
             $table->date('tgl_lahir')->nullable();           
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

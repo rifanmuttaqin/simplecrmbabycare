@@ -15,7 +15,10 @@
             <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a>
         </li>
 
-       
+        <li>
+            <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Layanan</span></a>
+        </li>
+
         <li>
             <a class="nav-link" href="{{ route('customer') }}"><i class="fas fa-male"></i> <span>Customer</span></a>
         </li>

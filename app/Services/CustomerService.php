@@ -19,9 +19,9 @@ class CustomerService {
     /**
     * @return int
     */
-    public function checkIfExist($telfon)
+    public function checkIfExist($nama, $telfon)
     {
-    	$data = $this->customer->where('telfon', $telfon)->count();
+    	$data = $this->customer->where('telfon', $telfon)->where('nama', $nama)->count();
 
     	if($data >= 1)
     	{

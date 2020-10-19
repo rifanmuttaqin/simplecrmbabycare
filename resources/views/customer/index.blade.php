@@ -43,7 +43,7 @@
     <div class="card-body">
 
     <div style="padding-bottom: 20px">
-      <a  href="#" type="button" class="btn btn-info"> TAMBAH </a>
+      <a  href="#" type="button" class="btn btn-info" id="tambah"> TAMBAH </a>
     </div>
 
     <div style="width: 100%; padding-left: -10px;">
@@ -54,7 +54,8 @@
               <th style="width: 50%">Nama</th>
               <th style="width: 10%">Telfon</th>
               <th style="width: 30%">Alamat Lengkap</th>
-              <th style="width: 10%">Umur</th>
+              <th style="width: 5%">Umur</th>
+              <th style="width: 5%">aksi</th>
           </tr>
       </thead>
       <tbody>
@@ -74,12 +75,164 @@
 @section('modal')
 
 
+<div class="modal fade" id="createModal" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+        <div class="modal-body">
+     
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" class="form-control" id="nama">
+          </div>
+
+          <div class="form-group">
+            <label>Telfon / WA</label>
+            <input type="text" class="form-control" id="telfon">
+          </div>
+
+          <div class="form-group">
+            <label>Alamat Lengkap</label>
+            <textarea type="text" class="form-control" id="alamat_lengkap"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" class="form-control" id="tgl_lahir">
+          </div>
+
+        </div>
+      
+        <div class="modal-footer">
+          <div class="form-group">
+            <button type="button" id="prosess" class="btn btn-info btn-default pull-left">Create</button>
+          </div>
+        </div>       
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ---------- UPDATE MODAL ------------ -->
+
+<div class="modal fade" id="updateModal" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+        <div class="modal-body">
+          
+          <input type="hidden" id="id_update">
+
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" class="form-control" id="nama_update">
+          </div>
+
+          <div class="form-group">
+            <label>Telfon / WA</label>
+            <input type="text" class="form-control" id="telfon_update">
+          </div>
+
+          <div class="form-group">
+            <label>Alamat Lengkap</label>
+            <textarea type="text" class="form-control" id="alamat_lengkap_update"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" class="form-control" id="tgl_lahir_update">
+          </div>
+
+        </div>
+      
+        <div class="modal-footer">
+          <div class="form-group">
+            <button type="button" id="prosess_update" class="btn btn-info btn-default pull-left">UPDATE</button>
+          </div>
+        </div>       
+
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @push('scripts')
 <script type="text/javascript">
 
+// ------- Global function --------
+
+function clearAll()
+{
+  $('#nama').val(null);
+  $('#telfon').val(null);
+  $('#alamat_lengkap').val(null);
+  $('#tgl_lahir').val(null);
+}
+
+function btnDel(iduser)
+{
+  var url = '{{route("customer-delete")}}';
+  swalConfrim("Menghapus Data","Data yang telah dihapus tidak dapat untuk dikembalikan",iduser,url);
+}
+
+function swalConfrim(pesan_title,pesan_body,dataid,url)
+{
+  swal({
+    title: pesan_title,
+    text: pesan_body, 
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) { setAjaxInsert(url,dataid); $('.modal').modal('hide'); }
+  });
+}
+
+
+function setAjaxInsert(url_nya,param)
+{
+  $.ajax({
+      type:'POST',
+      url: url_nya,
+      data:{"_token": "{{ csrf_token() }}", param},
+      success:function(data) {
+        if(data.status != false)
+        {
+          table.ajax.reload();
+          swal(data.message, { button:false, icon: "success", timer: 1000});
+          clearAll();
+        }
+        else
+        {
+          swal(data.message, { button:false, icon: "error", timer: 1000});
+        }
+      },
+      error: function(error) {
+        var err = eval("(" + error.responseText + ")");
+        var array_1 = $.map(err, function(value, index) {
+            return [value];
+        });
+        var array_2 = $.map(array_1, function(value, index) {
+            return [value];
+        });
+        var message = JSON.stringify(array_2);
+        swal(message, { button:false, icon: "error", timer: 1000});
+      }
+    });
+}
+
 $(function () {
+
+  clearAll();
 
   // Datatables
   table = $('#customer_table').DataTable({
@@ -94,8 +247,70 @@ $(function () {
           {data: 'nama', name: 'nama'},
           {data: 'alamat_lengkap', name: 'alamat_lengkap'},
           {data: 'telfon', name: 'telfon'},
-          {data: 'tgl_lahir', name: 'tgl_lahir'}
+          {data: 'tgl_lahir', name: 'tgl_lahir'},
+          {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
+  });
+
+  // Row Click event
+  $('.dataTable').on('click', 'tbody tr', function() {
+      
+      var data = table.row(this).data();
+      
+      $('#id_update').val(data.id);
+
+      $('#nama_update').val(data.nama);
+      $('#telfon_update').val(data.telfon);
+      $('#alamat_lengkap_update').val(data.alamat_lengkap);
+      $('#tgl_lahir_update').val(data.tgl_lahir);
+
+      $('#updateModal').modal('toggle');
+
+  })
+
+
+  $( "#tambah" ).click(function() { $('#createModal').modal('toggle'); });
+
+  // ------ CREATE -----
+
+  $( "#prosess" ).click(function() {
+    
+    var param = null;
+    var url   = "{{route('customer-store')}}";
+    
+    param = { 
+      nama :$('#nama').val(), 
+      alamat_lengkap :$('#alamat_lengkap').val(), 
+      telfon:$('#telfon').val(),
+      tgl_lahir:$('#tgl_lahir').val()
+    };
+
+    setAjaxInsert(url, param);
+
+    $('#createModal').modal('toggle');
+
+  });
+
+
+  // -------- UPDATE ------------
+
+  $( "#prosess_update" ).click(function() {
+    
+    var param = null;
+    var url   = "{{route('customer-update')}}";
+    
+    param = { 
+      id:$('#id_update').val(),
+      nama :$('#nama_update').val(), 
+      alamat_lengkap :$('#alamat_lengkap_update').val(), 
+      telfon:$('#telfon_update').val(),
+      tgl_lahir:$('#tgl_lahir_update').val()
+    };
+
+    setAjaxInsert(url, param);
+
+    $('#updateModal').modal('toggle');
+
   });
 
 });
