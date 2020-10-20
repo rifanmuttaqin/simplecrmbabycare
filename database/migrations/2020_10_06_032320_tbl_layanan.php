@@ -15,6 +15,7 @@ class TblLayanan extends Migration
     {
         Schema::create('tbl_layanan', function (Blueprint $table) {
             $table->bigIncrements('id', 20);
+            $table->string('kode_layanan')->unique();
             $table->string('nama_layanan');
             $table->double('harga');
             $table->string('keterangan');

@@ -66,6 +66,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('web')
                 ->namespace($this->namespace) 
                 ->group(base_path('routes/master/customer.php'));
+            Route::prefix('layanan')
+            ->middleware('web')
+            ->namespace($this->namespace) 
+            ->group(base_path('routes/master/layanan.php'));
         });
     }
 

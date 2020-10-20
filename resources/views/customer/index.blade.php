@@ -169,6 +169,8 @@
 
 // ------- Global function --------
 
+var token    = "{{ csrf_token() }}";
+
 function clearAll()
 {
   $('#nama').val(null);
@@ -230,7 +232,6 @@ $(function () {
   $( "#prosess" ).click(function() {
     
     var param = null;
-    var token = null;
     var url   = "{{route('customer-store')}}";
     
     param     = { 
@@ -239,8 +240,6 @@ $(function () {
       telfon:$('#telfon').val(),
       tgl_lahir:$('#tgl_lahir').val()
     };
-
-    token    = "{{ csrf_token() }}";
 
     setAjaxInsert(url, param, token);
 
@@ -264,7 +263,7 @@ $(function () {
       tgl_lahir:$('#tgl_lahir_update').val()
     };
 
-    setAjaxInsert(url, param);
+    setAjaxInsert(url, param, token);
 
     $('#updateModal').modal('toggle');
 

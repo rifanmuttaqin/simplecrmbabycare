@@ -12,8 +12,10 @@ use App\Services\LayananService;
 
 use Illuminate\Http\Request;
 
-use DB;
+use App\Http\Requests\Layanan\StoreLayananRequest;
+use App\Http\Requests\Layanan\UpdateLayananRequest;
 
+use DB;
 
 class LayananController extends Controller
 {
@@ -48,5 +50,86 @@ class LayananController extends Controller
         }
 
         return view('layanan.index', ['active'=>'layanan', 'title'=> 'Layanan']);
-    }   
+    }  
+
+
+     /**
+     * Delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        DB::beginTransaction(); 
+
+        $layanan_model = Layanan::findOrFail($request->param);
+
+        if($layanan_model->delete())
+        {
+            DB::commit();
+            return $this->getResponse(true,200,null,'Berhasil dihapus');
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,400,null,'Gagal dihapus');
+        }
+    }
+
+
+    /**
+     * Update
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateLayananRequest $request)
+    {
+        DB::beginTransaction(); 
+
+        $layanan_model = Layanan::findOrFail($request->param['id'])->update($request->param);
+
+        if($layanan_model)
+        {
+            DB::commit();
+            return $this->getResponse(true,200,null,'Berhasil update');
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,400,null,'Gagal update');
+        }
+    } 
+
+
+    /**
+     * Store
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreLayananRequest $request)
+    {
+        $layanan_model = new Layanan($request->param);
+
+        DB::beginTransaction(); 
+
+        $layanan_model->kode_layanan = LayananService::generateCodeLayanan();
+
+        if(LayananService::checkifExist($layanan_model->kode_layanan) != true)
+        {
+            if(!$layanan_model->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,null,'Gagal disimpan');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,null,'Berhasil disimpan'); 
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,400,null,'Terdapat duplikate Kode | Ulangi proses 1 Kali lagi');
+        }       
+    }
+
 }

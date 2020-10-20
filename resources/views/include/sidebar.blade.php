@@ -16,7 +16,7 @@
         </li>
 
         <li>
-            <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> <span>Layanan</span></a>
+            <a class="nav-link" href="{{ route('layanan') }}"><i class="fas fa-exchange-alt"></i> <span>Layanan</span></a>
         </li>
 
         <li>
