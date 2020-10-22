@@ -18,4 +18,5 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->post('/store',  ['as'=>'customer-store','uses' => 'CustomerController@store']);
     $router->post('/update',  ['as'=>'customer-update','uses' => 'CustomerController@update']);
     $router->post('/destroy',  ['as'=>'customer-delete','uses' => 'CustomerController@destroy']);
+    $router->post('/list-customer',  ['as'=>'list-customer','uses' => 'CustomerController@list']);
 });

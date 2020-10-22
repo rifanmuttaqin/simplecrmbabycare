@@ -132,4 +132,32 @@ class LayananController extends Controller
         }       
     }
 
+    /**
+     * List
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        if($request->ajax()) 
+        {
+            $datas          = null;
+            $datas          = LayananService::getAll($request->get('search'));
+            $arr_data       = array();
+
+            if($datas != null)
+            {
+                $key = 0;
+
+                foreach ($datas as $data) {
+                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['text'] = $data->nama;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
+    }
+
 }
