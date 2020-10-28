@@ -42,11 +42,6 @@
     </div> -->
     <div class="card-body">
 
-    <div class="form-group">
-      <label>Kode Transaksi</label>
-      <input disabled type="text" class="form-control" id="kode_transaksi">
-    </div>
-
     <div class="form-group row">
     <div class="col-sm-12">
         <label><small>Pelanggan</small></label>
@@ -57,16 +52,26 @@
 
     <div class="form-group row">
     <div class="col-sm-12">
-        <label><small>Layanan</small></label>
-        <select style="width: 100%" class="form-control select2-class" name="layanan" id="layanan">
+        <label><small>Daftar Layanan Diambil</small></label>
+        <select multiple="multiple" style="width: 100%" class="form-control select2-class" name="layanan" id="layanan">
         </select>
     </div>
+    </div>
+
+    <div class="form-group">
+      <label>TOTAL HARGA</label>
+      <input type="text" disabled class="form-control" id="harga">
+    </div>
+
+
+    <div class="form-group">
+      <label>Catatan</label>
+      <textarea type="text" class="form-control" id="catatan"> </textarea>
     </div>
 
     <div style="padding-bottom: 20px">
       <a  href="#" type="button" class="btn btn-info" id="tambah"> TAMBAH </a>
     </div>
-
      
     </div>
         
@@ -83,9 +88,35 @@
 @endsection
 
 @push('scripts')
+
 <script type="text/javascript">
 
+var token    = "{{ csrf_token() }}";
+
+/**
+ * Untuk Call Ajax Get Data
+ */
+function getData(param, url_nya, token)
+{
+    $.ajax({
+      type:'POST',
+      url: url_nya,
+      data:{"_token":token, param},
+      success: setHarga,
+    });
+};
+
+/**
+ * Callback function untuk get response
+ */
+function setHarga(response)
+{
+  $('#harga').val('Rp.' +response+',-');
+}
+
 $(function() {
+
+$('#harga').val(null);
 
 $('#customer').select2({
     allowClear: true,
@@ -127,6 +158,35 @@ $('#layanan').select2({
               };
           }
     }
+});
+
+// ----- Display Harga -----------
+
+$('#layanan').on('change', function (e) {
+
+  var param = $('#layanan').val();
+  var url   = "{{route('layanan-get-harga')}}";
+  
+  getData(param,url,token);
+
+});
+
+
+$( "#tambah" ).click(function() {
+  
+  var param = null;
+  var url   = "{{route('transaksi-store')}}";
+  
+  param     = { 
+    customer_id :$('#customer').val(), 
+    layanan_id :$('#layanan').val(), 
+    catatan:$('#catatan').val(),
+  };
+
+  setAjaxInsert(url, param, token);
+
+  $('#createModal').modal('toggle');
+
 });
 
 })

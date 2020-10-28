@@ -19,4 +19,5 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->post('/update',  ['as'=>'layanan-update','uses' => 'LayananController@update']);
     $router->post('/destroy',  ['as'=>'layanan-delete','uses' => 'LayananController@destroy']);
     $router->post('/list',  ['as'=>'list-layanan','uses' => 'LayananController@list']);
+    $router->post('/get-harga',  ['as'=>'layanan-get-harga','uses' => 'LayananController@getHarga']);
 });

@@ -78,6 +78,32 @@ class LayananController extends Controller
 
 
     /**
+     * get Harga
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getHarga(Request $request)
+    {
+        // Return Total Harga
+        if($request->ajax())
+        {
+            $data   = $request->param;
+            $harga  = 0;
+
+            if($data != null)
+            {
+                foreach ($data as $layanan) 
+                {
+                    $harga += Layanan::findOrFail($layanan)->harga;
+                }
+            }
+
+            return $harga;
+        }
+    }
+
+
+    /**
      * Update
      *
      * @return \Illuminate\Http\Response
@@ -151,7 +177,7 @@ class LayananController extends Controller
 
                 foreach ($datas as $data) {
                     $arr_data[$key]['id'] = $data->id;
-                    $arr_data[$key]['text'] = $data->nama;
+                    $arr_data[$key]['text'] = $data->nama_layanan . ' ('.$data->harga .')';
                     $key++;
                 }
             }

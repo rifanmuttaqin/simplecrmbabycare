@@ -82,8 +82,8 @@
   <link rel="shortcut icon" href="{{ URL::to('/').'/layout/assets/img/bps_logo.ico' }}">
 
   <!-- Highchart -->
-  <script src="<?= URL::to('/'); ?>/layout/assets/js/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+<!--   <script src="<?= URL::to('/'); ?>/layout/assets/js/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
 
 
   <!-- Select Select-->

@@ -24,6 +24,7 @@ function swalConfrim(pesan_title,pesan_body,dataid,url,token)
   });
 }
 
+
 /**
  * Untuk Call Ajax
  */
