@@ -47,6 +47,24 @@ class LayananService {
     }
 
     /**
+    * @return double
+    */
+    public static function getHarga($param)
+    {
+        $harga  = 0;
+
+        if($param != null)
+        {
+            foreach ($param as $layanan) 
+            {
+                $harga += Layanan::findOrFail($layanan)->harga;
+            }
+        }
+
+        return $harga;
+    }
+
+    /**
     * @return boolean
     */
     public static function checkifExist($code)
@@ -58,5 +76,25 @@ class LayananService {
 
         return false;
     }
+
+    /**
+    * @return boolean
+    */
+    public static function mergeLayanan($list_layanan)
+    {
+        $layanan_result = '';
+
+        if($list_layanan != null)
+        {
+            foreach ($list_layanan as $service) 
+            {
+                $service = Layanan::findOrfail($service)->nama_layanan;
+                $layanan_result .= $service .',';
+            }
+        }
+
+        return $layanan_result;
+    }
+
 
 }

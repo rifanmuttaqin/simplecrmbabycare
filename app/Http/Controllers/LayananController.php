@@ -87,18 +87,7 @@ class LayananController extends Controller
         // Return Total Harga
         if($request->ajax())
         {
-            $data   = $request->param;
-            $harga  = 0;
-
-            if($data != null)
-            {
-                foreach ($data as $layanan) 
-                {
-                    $harga += Layanan::findOrFail($layanan)->harga;
-                }
-            }
-
-            return $harga;
+            return LayananService::getHarga($request->param);
         }
     }
 

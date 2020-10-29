@@ -23,11 +23,8 @@ class TblTransaksi extends Migration
             $table->double('total_harga');
             $table->string('wa_customer')->nullable();
             $table->date('date')->nullable();
-
             $table->string('nama_terapis');
-
-            $table->text('catatan');
-                      
+            $table->text('catatan')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

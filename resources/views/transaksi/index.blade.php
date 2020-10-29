@@ -43,12 +43,17 @@
     <div class="card-body">
 
     <div class="form-group row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <label><small>Pelanggan</small></label>
         <select style="width: 100%" class="form-control select2-class" name="customer" id="customer">
         </select>
     </div>
+    <div class="col-sm-6" style="padding-top: 35px">
+        <button id="plus" type="button" class="btn btn-primary btn"> <i class="fas fa-plus-square"></i> </button>
     </div>
+    </div>
+
+    <hr>
 
     <div class="form-group row">
     <div class="col-sm-12">
@@ -85,6 +90,48 @@
 
 @section('modal')
 
+<div class="modal fade" id="createModal" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+        <div class="modal-body">
+     
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" class="form-control" id="nama">
+          </div>
+
+          <div class="form-group">
+            <label>Telfon / WA</label>
+            <input type="text" class="form-control" id="telfon">
+          </div>
+
+          <div class="form-group">
+            <label>Alamat Lengkap</label>
+            <textarea type="text" class="form-control" id="alamat_lengkap"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" class="form-control" id="tgl_lahir">
+          </div>
+
+        </div>
+      
+        <div class="modal-footer">
+          <div class="form-group">
+            <button type="button" id="prosess" class="btn btn-info btn-default pull-left">Create</button>
+          </div>
+        </div>       
+
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
 @push('scripts')
@@ -92,6 +139,15 @@
 <script type="text/javascript">
 
 var token    = "{{ csrf_token() }}";
+
+
+function clearAll()
+{
+  $('#nama').val(null);
+  $('#telfon').val(null);
+  $('#alamat_lengkap').val(null);
+  $('#tgl_lahir').val(null);
+}
 
 /**
  * Untuk Call Ajax Get Data
@@ -116,7 +172,31 @@ function setHarga(response)
 
 $(function() {
 
+clearAll();
+
+// ------ CREATE USER -----
+
+$( "#prosess" ).click(function() {
+  
+  var param = null;
+  var url   = "{{route('customer-store')}}";
+  
+  param     = { 
+    nama :$('#nama').val(), 
+    alamat_lengkap :$('#alamat_lengkap').val(), 
+    telfon:$('#telfon').val(),
+    tgl_lahir:$('#tgl_lahir').val()
+  };
+
+  setAjaxInsert(url, param, token);
+
+  $('#createModal').modal('toggle');
+
+});
+
 $('#harga').val(null);
+
+$( "#plus" ).click(function() { $('#createModal').modal('toggle'); });
 
 $('#customer').select2({
     allowClear: true,
@@ -179,7 +259,7 @@ $( "#tambah" ).click(function() {
   
   param     = { 
     customer_id :$('#customer').val(), 
-    layanan_id :$('#layanan').val(), 
+    layanan :$('#layanan').val(), 
     catatan:$('#catatan').val(),
   };
 

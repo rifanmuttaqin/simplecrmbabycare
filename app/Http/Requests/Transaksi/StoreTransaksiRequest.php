@@ -27,7 +27,7 @@ class StoreTransaksiRequest extends FormRequest
     {
         return [
             'param.customer_id'  => 'required|integer',
-            'param.layanan_id'   => 'required|integer',            
+            'param.layanan'      => 'required|array',            
         ];
     }
 
@@ -41,7 +41,7 @@ class StoreTransaksiRequest extends FormRequest
         return 
         [
             'customer_id.required'   => 'Pelanggan tidak boleh Kosong',
-            'layanan_id.required'    => 'Layanan Tidak Boleh Kosong',
+            'layanan.required'       => 'Layanan Tidak Boleh Kosong',
         ];
     }
 }
