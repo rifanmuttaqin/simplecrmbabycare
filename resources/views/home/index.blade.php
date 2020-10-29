@@ -44,13 +44,71 @@
 
     <div class="row">
 
-   
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon bg-primary">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="card-header">
+            <h4> Total Transaksi Bulan {{ date('M') }} </h4>
+          </div>
+          <div class="card-body">
+            {{ TransaksiService::getTotalTransaksi() }}
+          </div>
+        </div>
+      </div>
+    </div>
 
 
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon bg-primary">
+          <i class="fas fa-male"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="card-header">
+            <h4> Total Pasien Baru Pada Bulan {{ date('M') }} </h4>
+          </div>
+          <div class="card-body">
+            {{ CustomerService::sumnewCustomer() }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-    
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon bg-primary">
+          <i class="fas fa-print"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="card-header">
+            <h4> Jumlah Pesanan Belum Tercetak </h4>
+          </div>
+          <div class="card-body">
+            {{ TransaksiService::notPrint() }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-           
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon bg-primary">
+          <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="card-header">
+            <h4> Pendapatan Bulan {{ date('M') }} </h4>
+          </div>
+          <div class="card-body">
+            {{ TransaksiService::getTotalIncome() }}
+          </div>
+        </div>
+      </div>
+    </div>
+       
     </div>
         
     </div>

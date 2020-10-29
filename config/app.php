@@ -229,7 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'User' => App\Model\User\User::class,
-
+        'TransaksiService' => App\Services\TransaksiService::class,
     ],
 
 ];

@@ -37,9 +37,9 @@ function setAjaxInsert(url_nya,param,token)
       success:function(data) {
         if(data.status != false)
         {
-          table.ajax.reload();
           swal(data.message, { button:false, icon: "success", timer: 1000});
           clearAll();
+          table.ajax.reload();
         }
         else
         {

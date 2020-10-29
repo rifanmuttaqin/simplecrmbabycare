@@ -24,4 +24,12 @@ class TransaksiService {
         return $data;
     }
 
+    /**
+    * @return int
+    */
+    public static function getTotalTransaksi()
+    {
+        return Transaksi::whereMonth('created_at', '=', date('m'))->count();
+    }
+
 }

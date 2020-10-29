@@ -147,6 +147,11 @@ function clearAll()
   $('#telfon').val(null);
   $('#alamat_lengkap').val(null);
   $('#tgl_lahir').val(null);
+
+  $('#customer').val(null).trigger('change');
+  $('#layanan').val(null).trigger('change');
+  $('#harga').val(null);
+  $('#catatan').val(null);
 }
 
 /**
@@ -264,8 +269,6 @@ $( "#tambah" ).click(function() {
   };
 
   setAjaxInsert(url, param, token);
-
-  $('#createModal').modal('toggle');
 
 });
 
