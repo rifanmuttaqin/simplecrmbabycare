@@ -20,7 +20,7 @@
         </li>
 
         <li>
-            <a class="nav-link" href="{{ route('customer') }}"><i class="fas fa-male"></i> <span>Customer</span></a>
+            <a class="nav-link" href="{{ route('customer') }}"><i class="fas fa-male"></i> <span>Pasien</span></a>
         </li>
 
         <li class="nav-item dropdown">

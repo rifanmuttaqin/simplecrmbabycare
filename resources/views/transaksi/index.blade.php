@@ -44,7 +44,7 @@
 
     <div class="form-group row">
     <div class="col-sm-6">
-        <label><small>Pelanggan</small></label>
+        <label><small>Pasien (PX)</small></label>
         <select style="width: 100%" class="form-control select2-class" name="customer" id="customer">
         </select>
     </div>
@@ -205,7 +205,7 @@ $( "#plus" ).click(function() { $('#createModal').modal('toggle'); });
 
 $('#customer').select2({
     allowClear: true,
-    placeholder: "Pilih Pelanggan",
+    placeholder: "Pilih PX",
     ajax: {
       url: '{{route("list-customer")}}',
       type: "POST",

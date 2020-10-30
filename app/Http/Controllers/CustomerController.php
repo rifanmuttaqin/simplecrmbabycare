@@ -49,7 +49,7 @@ class CustomerController extends Controller
             ->make(true);
         }
 
-        return view('customer.index', ['active'=>'customer', 'title'=> 'Customer']);
+        return view('customer.index', ['active'=>'customer', 'title'=> 'Pasien']);
     }
 
     /**

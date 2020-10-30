@@ -54,7 +54,7 @@
             <h4> Total Transaksi Bulan {{ date('M') }} </h4>
           </div>
           <div class="card-body">
-            {{ TransaksiService::getTotalTransaksi() }}
+           
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
             <h4> Total Pasien Baru Pada Bulan {{ date('M') }} </h4>
           </div>
           <div class="card-body">
-            {{ CustomerService::sumnewCustomer() }}
+            
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
             <h4> Jumlah Pesanan Belum Tercetak </h4>
           </div>
           <div class="card-body">
-            {{ TransaksiService::notPrint() }}
+            
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
             <h4> Pendapatan Bulan {{ date('M') }} </h4>
           </div>
           <div class="card-body">
-            {{ TransaksiService::getTotalIncome() }}
+            
           </div>
         </div>
       </div>
