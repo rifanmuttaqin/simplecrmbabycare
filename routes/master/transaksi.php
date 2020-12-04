@@ -16,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 $router->group(['prefix' => ''], function () use ($router) {
     $router->get('/',  ['as'=>'transaksi','uses' => 'TransaksiController@index']);
     $router->post('/store',  ['as'=>'transaksi-store','uses' => 'TransaksiController@store']);
+    $router->get('/report',  ['as'=>'report-transaksi','uses' => 'ReportTransaksiController@index']);
+    $router->get('/print',  ['as'=>'report-print','uses' =>'ReportTransaksiController@printByFilter']);
+
+    $router->post('/preview',  ['as'=>'preview-print','uses' =>'ReportTransaksiController@preview']);
 });

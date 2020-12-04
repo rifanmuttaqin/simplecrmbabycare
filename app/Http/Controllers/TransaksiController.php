@@ -14,6 +14,8 @@ use App\Model\Customer\Customer;
 
 use App\Model\Transaksi\Transaksi;
 
+use App\Services\TransaksiService;
+
 use App\Http\Requests\Transaksi\StoreTransaksiRequest;
 
 use DB;

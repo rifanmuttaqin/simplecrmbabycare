@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Model\Transaksi\Transaksi;
 
+use Carbon\Carbon;
+
 use Auth;
 
 class TransaksiService {
@@ -18,10 +20,24 @@ class TransaksiService {
     /**
     * @return int
     */
-    public static function getAll($search = null) // By WA Number
+    public static function getAll($search = null, $date_start=null, $date_end=null, $customer=null) // By WA Number
     {
-        $data = Transaksi::where('wa_customer', 'like', '%'.$search.'%')->get();
-        return $data;
+        $date_from  = Carbon::parse($date_start)->startOfDay();
+        $date_to    = Carbon::parse($date_end)->endOfDay();
+
+        $data = Transaksi::where('wa_customer', 'like', '%'.$search.'%')->orderBy('date', 'DESC');
+
+        if($date_start != null && $date_from !=null)
+        {
+            $data->whereDate('date', '>=', $date_from)->whereDate('date', '<=', $date_to);
+        }
+
+        if($customer != null)
+        {
+            $data->where('nama_customer', $customer);
+        }
+        
+        return $data->get();
     }
 
     /**

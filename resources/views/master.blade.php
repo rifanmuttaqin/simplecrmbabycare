@@ -81,10 +81,6 @@
 
   <link rel="shortcut icon" href="{{ URL::to('/').'/layout/assets/img/bps_logo.ico' }}">
 
-  <!-- Highchart -->
-<!--   <script src="<?= URL::to('/'); ?>/layout/assets/js/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
-
 
   <!-- Select Select-->
   <link href="<?= URL::to('/'); ?>/layout/assets/css/select2.min.css" rel="stylesheet" />

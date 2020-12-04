@@ -77,6 +77,24 @@
     <div style="padding-bottom: 20px">
       <a  href="#" type="button" class="btn btn-info" id="tambah"> TAMBAH </a>
     </div>
+
+    <hr>
+
+    <div style="width: 100%; padding-left: -10px;">
+    <div class="table-responsive">
+    <table id="toko_table" class="table table-bordered data-table display nowrap" style="width:100%">
+    <thead style="text-align:center;">
+        <tr>
+            <th style="width: 10%">PX (Pasien)</th>
+            <th style="width: 50%">Layanan</th>
+            <th style="width: 50%">Harga</th>
+            <th style="width: 50%">Tanggal</th>
+            <th style="width: 50%">Catatan</th>
+        </tr>
+    </thead>
+    </table>
+    </div>
+    </div>
      
     </div>
         
@@ -98,7 +116,12 @@
       </div>
       
         <div class="modal-body">
-     
+          
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir">
+          </div>
+
           <div class="form-group">
             <label>Nama</label>
             <input type="text" class="form-control" id="nama">
@@ -112,11 +135,6 @@
           <div class="form-group">
             <label>Alamat Lengkap</label>
             <textarea type="text" class="form-control" id="alamat_lengkap"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input type="date" class="form-control" id="tgl_lahir">
           </div>
 
         </div>
@@ -176,6 +194,30 @@ function setHarga(response)
 }
 
 $(function() {
+
+$('input[name="tgl_lahir"]').daterangepicker({
+  singleDatePicker: true,
+  showDropdowns: true,
+  autoApply: true,
+});
+
+table = $('#toko_table').DataTable({
+    processing: true,
+    serverSide: true,
+    searching: false,
+    rowReorder: {
+        selector: 'td:nth-child(2)'
+    },
+    responsive: true,
+    ajax: "{{route('report-transaksi')}}",
+    columns: [
+      {data: 'nama_customer', name: 'nama_customer'},
+      {data: 'daftar_layanan', name: 'daftar_layanan'},
+      {data: 'total_harga', name: 'total_harga'},
+      {data: 'date', name: 'date'},
+      {data: 'catatan', name: 'catatan'}
+    ]
+});
 
 clearAll();
 

@@ -83,7 +83,12 @@
       </div>
       
         <div class="modal-body">
-     
+          
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir">
+          </div>
+
           <div class="form-group">
             <label>Nama</label>
             <input type="text" class="form-control" id="nama">
@@ -97,11 +102,6 @@
           <div class="form-group">
             <label>Alamat Lengkap</label>
             <textarea type="text" class="form-control" id="alamat_lengkap"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input type="date" class="form-control" id="tgl_lahir">
           </div>
 
         </div>
@@ -131,6 +131,11 @@
           <input type="hidden" id="id_update">
 
           <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="text" class="form-control" name="tgl_lahir_update" id="tgl_lahir_update">
+          </div>
+
+          <div class="form-group">
             <label>Nama</label>
             <input type="text" class="form-control" id="nama_update">
           </div>
@@ -143,11 +148,6 @@
           <div class="form-group">
             <label>Alamat Lengkap</label>
             <textarea type="text" class="form-control" id="alamat_lengkap_update"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input type="date" class="form-control" id="tgl_lahir_update">
           </div>
 
         </div>
@@ -187,6 +187,18 @@ function btnDel(iduser)
 }
 
 $(function () {
+
+  $('input[name="tgl_lahir"]').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    autoApply: true,
+  });
+
+  $('input[name="tgl_lahir_update"]').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    autoApply: true,
+  });
 
   clearAll();
 

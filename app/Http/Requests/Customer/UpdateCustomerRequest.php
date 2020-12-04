@@ -29,7 +29,7 @@ class UpdateCustomerRequest extends FormRequest
             'param.nama'                  => 'required|string|min:2',
             'param.alamat_lengkap'        => 'required|string|min:2',
             'param.telfon'                => 'required|string|min:2|max:20',
-            'param.tgl_lahir'             => 'date|min:2|max:20',
+            'param.tgl_lahir'             => 'nullable|date|min:2|max:20',
         ];
     }
 

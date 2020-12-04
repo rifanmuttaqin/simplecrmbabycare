@@ -12,6 +12,10 @@
         </li>
 
         <li>
+            <a class="nav-link" href="#"><i class="fas fa-user-clock"></i><span>Penjadwalan</span></a>
+        </li>
+
+        <li>
             <a class="nav-link" href="{{route('transaksi')}}"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a>
         </li>
 
@@ -26,7 +30,9 @@
         <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file"></i> <span>Laporan</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="#">Transaksi</a></li>
+            <li><a class="nav-link" href="{{route('report-transaksi')}}">LP.Transaksi</a></li>
+            <li><a class="nav-link" href="{{route('report-print')}}">Cetak Transaksi</a></li>
+
         </ul>
         </li>
 
