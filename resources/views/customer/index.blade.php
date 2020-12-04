@@ -215,7 +215,7 @@ $(function () {
           {data: 'nama', name: 'nama'},
           {data: 'alamat_lengkap', name: 'alamat_lengkap'},
           {data: 'telfon', name: 'telfon'},
-          {data: 'tgl_lahir', name: 'tgl_lahir'},
+          {data: 'umur', name: 'umur'},
           {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
   });

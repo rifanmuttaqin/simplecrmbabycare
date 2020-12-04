@@ -205,6 +205,7 @@ table = $('#toko_table').DataTable({
     processing: true,
     serverSide: true,
     searching: false,
+    order: [[ 3, "desc" ]],
     rowReorder: {
         selector: 'td:nth-child(2)'
     },

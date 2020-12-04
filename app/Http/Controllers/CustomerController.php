@@ -42,10 +42,15 @@ class CustomerController extends Controller
 
             return Datatables::of($data)
             ->addColumn('action', function($row)
-                {  
-                    $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
-                    return $delete; 
-                })
+            {  
+                $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
+                return $delete; 
+            })
+            ->addColumn('umur', function($row)
+            {  
+                $umur = $row->tgl_lahir != null ? CustomerService::countAge($row->tgl_lahir) : 0;
+                return $umur; 
+            })
             ->make(true);
         }
 

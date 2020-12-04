@@ -80,22 +80,6 @@
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-primary">
-          <i class="fas fa-print"></i>
-        </div>
-        <div class="card-wrap">
-          <div class="card-header">
-            <h4> Jumlah Pesanan Belum Tercetak </h4>
-          </div>
-          <div class="card-body">
-            
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-      <div class="card card-statistic-1">
-        <div class="card-icon bg-primary">
           <i class="fas fa-dollar-sign"></i>
         </div>
         <div class="card-wrap">

@@ -91,7 +91,8 @@
         <div class="form-group">
             <label for="sel1">Tipe Akun</label>
             <select class="form-control" id="account_type" name="account_type">
-            <option value="{{ User::ACCOUNT_TYPE_ADMIN }}">Admin</option>                   
+            <option value="{{ User::ACCOUNT_TYPE_ADMIN }}">Admin</option>   
+            <option value="{{ User::ACCOUNT_TYPE_TERAPIS }}">Terapis</option>                   
             </select>
         </div>
 

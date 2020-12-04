@@ -82,6 +82,7 @@ $(function () {
   table = $('#toko_table').DataTable({
       processing: true,
       serverSide: true,
+      order: [[ 5, "desc" ]],
       rowReorder: {
           selector: 'td:nth-child(2)'
       },

@@ -105,6 +105,7 @@
       <label for="sel1">Tipe Akun</label>
       <select class="form-control" id="tipe_akun">
         <option value="{{ User::ACCOUNT_TYPE_ADMIN }}" >Admin</option>
+        <option value="{{ User::ACCOUNT_TYPE_TERAPIS }}" >Terapis</option>
       </select>
     </div>
 
