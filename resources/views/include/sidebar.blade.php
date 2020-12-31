@@ -7,7 +7,7 @@
     </div>
     <ul class="sidebar-menu">
 
-        <li>
+        @if($active == 'home') <li class="active"> @else <li> @endif
             <a class="nav-link" href="{{route('home')}}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
         </li>
 
@@ -15,31 +15,36 @@
             <a class="nav-link" href="#"><i class="fas fa-user-clock"></i><span>Penjadwalan</span></a>
         </li>
 
-        <li>
+        @if($active == 'transaksi') <li class="active"> @else <li> @endif
             <a class="nav-link" href="{{route('transaksi')}}"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a>
         </li>
 
-        <li>
+        @if($active == 'layanan') <li class="active"> @else <li> @endif
             <a class="nav-link" href="{{ route('layanan') }}"><i class="fas fa-concierge-bell"></i> <span>Layanan</span></a>
         </li>
 
-        <li>
+        @if($active == 'customer') <li class="active"> @else <li> @endif
             <a class="nav-link" href="{{ route('customer') }}"><i class="fas fa-male"></i> <span>Pasien</span></a>
         </li>
 
-        <li class="nav-item dropdown">
+        @if($active == 'laporan-transaksi-index' || $active == 'laporan transaksi') <li class="nav-item dropdown active"> @else <li> @endif
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file"></i> <span>Laporan</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="{{route('report-transaksi')}}">LP.Transaksi</a></li>
-            <li><a class="nav-link" href="{{route('report-print')}}">Cetak Transaksi</a></li>
-
+             @if($active == 'laporan-transaksi-index') <li class="active"> @else <li> @endif 
+                <a class="nav-link" href="{{route('report-transaksi')}}">LP.Transaksi</a>
+            </li>
+             @if($active == 'laporan transaksi') <li class="active"> @else <li> @endif 
+                <a class="nav-link" href="{{route('report-print')}}">Cetak Transaksi</a>
+            </li>
         </ul>
         </li>
 
-        <li class="nav-item dropdown">
+        @if($active == 'user') <li class="nav-item dropdown active"> @else <li> @endif
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>User</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="{{route('index-user')}}">Kelola User</a></li>
+            @if($active == 'user') <li class="active"> @else <li> @endif
+                <a class="nav-link" href="{{route('index-user')}}">Kelola User</a>
+            </li>
         </ul>
         </li>
 

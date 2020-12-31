@@ -122,6 +122,11 @@ $(function () {
     }
   });
 
+  $('#cetakData').click(function(){
+    var url = '{{route("cetak-laporan")}}'; 
+    window.location.replace(url);
+  });
+
   $('#previewData').click(function() {
 
     var customer = $('#customer').select2('data');

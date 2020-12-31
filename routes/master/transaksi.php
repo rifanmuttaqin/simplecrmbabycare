@@ -20,4 +20,5 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('/print',  ['as'=>'report-print','uses' =>'ReportTransaksiController@printByFilter']);
 
     $router->post('/preview',  ['as'=>'preview-print','uses' =>'ReportTransaksiController@preview']);
+    $router->get('/cetak',  ['as'=>'cetak-laporan','uses' =>'ReportTransaksiController@cetakPdf']);
 });

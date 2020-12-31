@@ -41,6 +41,25 @@ class TransaksiService {
     }
 
     /**
+    * @return double
+    */
+    public static function getTotalInvoice($date_start, $date_end)
+    {
+        $data = Transaksi::select('total_harga')->whereDate('date', '>=', $date_start)->whereDate('date', '<=', $date_end)->sum('total_harga');
+
+        return $data;
+    }
+
+    /**
+    * @return date
+    */
+    public static function formatDate($date)
+    {
+        return Carbon::parse($date)->format('d M Y');
+    }
+
+
+    /**
     * @return int
     */
     public static function getTotalTransaksi()

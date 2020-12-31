@@ -131,11 +131,6 @@
           </div>
 
           <div class="form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" class="form-control" value="" id="nama_penuh">
-          </div>
-
-          <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" value="" id="password">
           </div>

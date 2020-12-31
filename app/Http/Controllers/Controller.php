@@ -30,6 +30,19 @@ class Controller extends BaseController
     /**
      * @return void
      */
+    public function isAdmin()
+    {
+        if(Auth::user()->account_type != User::ACCOUNT_TYPE_ADMIN)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return void
+     */
     public function getResponse($status,$status_code,$data=null,$message)
     {
         if($status != false)
