@@ -60,10 +60,12 @@ class Controller extends BaseController
      */
     public function onlyAdmin()
     {
-        if(!Auth::user()->account_type == User::ACCOUNT_TYPE_ADMIN)
+        if(Auth::user()->account_type != User::ACCOUNT_TYPE_ADMIN)
         {
-            return view('error.unauthorized',['active'=>'error']);
+            dd('tidak diizinkan');
+            return view('error.unauthorized',['active'=>'error']); 
         }
+
     }
 
     /**

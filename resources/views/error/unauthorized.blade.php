@@ -4,8 +4,6 @@
  
 @section('title', 'Halaman Error')
 
-
-
 @section('content')
 
 <div class="card col-sm-12">

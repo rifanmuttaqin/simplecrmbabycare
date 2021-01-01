@@ -39,6 +39,8 @@
         </ul>
         </li>
 
+        @if(Auth::user()->account_type == User::ACCOUNT_TYPE_ADMIN)
+        <li>
         @if($active == 'user') <li class="nav-item dropdown active"> @else <li> @endif
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>User</span></a>
         <ul class="dropdown-menu">
@@ -47,6 +49,7 @@
             </li>
         </ul>
         </li>
+        @endif
 
         <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cog"></i> <span>Pengaturan</span></a>

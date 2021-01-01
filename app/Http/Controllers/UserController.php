@@ -63,6 +63,10 @@ class UserController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
+        else
+        {
+            $this->onlyAdmin();
+        }
 
         return view('user.index', ['active'=>'user', 'title'=> 'Daftar Pengguna']);
     }
@@ -75,6 +79,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->onlyAdmin();
+
         return view('user.store', ['active'=>'user', 'title'=>'Pengelolaan User']);
     }
 
@@ -86,6 +92,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {        
+        $this->onlyAdmin();
+
         DB::beginTransaction();        
         
         $user = new User();
@@ -117,6 +125,8 @@ class UserController extends Controller
      */
     public function show(Request $request)
     {
+        $this->onlyAdmin();
+
         if ($request->ajax()) {
 
             if($request->iduser != null)
@@ -141,6 +151,8 @@ class UserController extends Controller
      */
     public function import(Request $request)
     { 
+        $this->onlyAdmin();
+
         return view('user.import', ['active'=>'user-import', 'title'=> 'Import User']); 
     }
     
@@ -153,6 +165,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {
+        $this->onlyAdmin();
+
         if ($request->ajax()) {
             
             DB::beginTransaction();
@@ -207,7 +221,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
-    {        
+    {  
+        $this->onlyAdmin();
+
         if ($request->ajax()) 
         {
             DB::beginTransaction();
