@@ -227,7 +227,7 @@ $( document ).ready(function() {
 
     $.ajax({
         type:'POST',
-        url: base_url + '/profile/update-password',
+        url: '{{route("update-password")}}',
         data:
         {
           "_token": "{{ csrf_token() }}",
