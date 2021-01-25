@@ -197,7 +197,8 @@ $(function () {
   $('input[name="tgl_lahir_update"]').daterangepicker({
     singleDatePicker: true,
     showDropdowns: true,
-    autoApply: true,
+    autoUpdateInput : true,
+    autoApply: false,
   });
 
   clearAll();

@@ -16,6 +16,7 @@ use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 
 use DB;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
@@ -45,6 +46,11 @@ class CustomerController extends Controller
             {  
                 $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
                 return $delete; 
+            })
+            ->addColumn('tgl_lahir', function($row)
+            {  
+                $tgl_lahir = Carbon::parse($row->tgl_lahir);
+                return $tgl_lahir->format('m/d/Y');
             })
             ->addColumn('umur', function($row)
             {  
