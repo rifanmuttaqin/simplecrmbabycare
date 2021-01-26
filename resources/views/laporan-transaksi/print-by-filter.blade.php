@@ -204,7 +204,7 @@ $(function () {
    
               // Update footer
               $( api.column( 3 ).footer() ).html(
-                ' (Keseluruhan Rp '+ total +')'
+                ' (PerHalaman Rp '+ total +')'
               );
           }
 
