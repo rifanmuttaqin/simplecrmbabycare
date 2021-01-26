@@ -58,6 +58,10 @@ class TransaksiController extends Controller
             $transaksi      = new Transaksi();
             $customer       = Customer::find($request->param['customer_id']);
 
+            $date = $request->param['date'];
+            $date = Carbon::parse($date);
+            $date = $date->format('Y-m-d');
+
             if($customer != null)
             {
                 $transaksi->nama_customer   = $customer->nama;
@@ -66,7 +70,7 @@ class TransaksiController extends Controller
                 $transaksi->daftar_layanan  = LayananService::mergeLayanan($request->param['layanan']);
                 $transaksi->total_harga     = LayananService::getHarga($request->param['layanan']);
                 $transaksi->wa_customer     = $customer->telfon;
-                $transaksi->date            = Carbon::now();
+                $transaksi->date            = $date;
                 $transaksi->nama_terapis    = $this->getUserLogin()->nama; // Bedasarkan User Login
                 $transaksi->catatan         = $request->param['catatan'];
 

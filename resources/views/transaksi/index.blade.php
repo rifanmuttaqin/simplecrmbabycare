@@ -42,6 +42,11 @@
     </div> -->
     <div class="card-body">
 
+    <div class="form-group">
+      <label>Tanggal Layanan</label>
+      <input type="text" class="form-control" name="date" id="date">
+    </div>
+
     <div class="form-group row">
     <div class="col-sm-6">
         <label><small>Pasien (PX)</small></label>
@@ -195,7 +200,7 @@ function setHarga(response)
 
 $(function() {
 
-$('input[name="tgl_lahir"]').daterangepicker({
+$('input[name="date"]').daterangepicker({
   singleDatePicker: true,
   showDropdowns: true,
   autoApply: true,
@@ -309,6 +314,7 @@ $( "#tambah" ).click(function() {
     customer_id :$('#customer').val(), 
     layanan :$('#layanan').val(), 
     catatan:$('#catatan').val(),
+    date:$('#date').val(),
   };
 
   setAjaxInsert(url, param, token);
