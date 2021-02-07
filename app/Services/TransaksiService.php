@@ -37,7 +37,7 @@ class TransaksiService {
             $data->where('nama_customer', $customer);
         }
         
-        return $data->get();
+        return $data;
     }
 
     /**

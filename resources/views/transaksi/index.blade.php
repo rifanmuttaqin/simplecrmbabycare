@@ -87,7 +87,7 @@
 
     <div style="width: 100%; padding-left: -10px;">
     <div class="table-responsive">
-    <table id="toko_table" class="table table-bordered data-table display nowrap" style="width:100%">
+    <table id="transaksi_table" class="table table-bordered data-table display nowrap" style="width:100%">
     <thead style="text-align:center;">
         <tr>
             <th style="width: 10%">PX (Pasien)</th>
@@ -206,7 +206,7 @@ $('input[name="date"]').daterangepicker({
   autoApply: true,
 });
 
-table = $('#toko_table').DataTable({
+table = $('#transaksi_table').DataTable({
     processing: true,
     serverSide: true,
     searching: false,
