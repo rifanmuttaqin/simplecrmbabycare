@@ -49,14 +49,14 @@ class ReportTransaksiController extends Controller
                 })
             ->addColumn('action', function($row){
                 
-                if($this->isAdmin())
-                {
+                // if($this->isAdmin())
+                // {
                     $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
-                }
-                else
-                {
-                    $delete = '';
-                }
+                // }
+                // else
+                // {
+                //     $delete = '';
+                // }
                 
                 return $delete; 
 
