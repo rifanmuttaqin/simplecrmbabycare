@@ -49,14 +49,7 @@ class ReportTransaksiController extends Controller
                 })
             ->addColumn('action', function($row){
                 
-                // if($this->isAdmin())
-                // {
-                    $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
-                // }
-                // else
-                // {
-                //     $delete = '';
-                // }
+                $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
                 
                 return $delete; 
 
@@ -133,7 +126,7 @@ class ReportTransaksiController extends Controller
         $date_start = Carbon::parse($date_start)->format('d M Y');
         $date_end   = Carbon::parse($date_end)->format('d M Y');
 
-        $pdf   = PDF::loadView('laporan-transaksi.cetak',['data'=> $model_transaksi,'date_start'=> $date_start, 'date_end'=>$date_end, 'total_invoice'=>$total_invoice])->setPaper('a4', 'landscape');
+        $pdf   = PDF::loadView('laporan-transaksi.cetak',['transaksi'=>$this->transaksi,'data'=> $model_transaksi,'date_start'=> $date_start, 'date_end'=>$date_end, 'total_invoice'=>$total_invoice])->setPaper('a4', 'landscape');
             
         return $pdf->stream('cetak_label.pdf');
       }

@@ -56,7 +56,7 @@
 	    <td>{{ $transaksi_data->nama_customer }}</td>
 	    <td>{{ $transaksi_data->daftar_layanan }}</td>
 	    <td>{{ $transaksi_data->nama_terapis }}</td>
-	    <td>{{ TransaksiService::formatDate($transaksi_data->date) }}</td>
+	    <td>{{ $transaksi->formatDate($transaksi_data->date) }}</td>
 	    <td>{{ $transaksi_data->total_harga }}</td>
 	    <td>{{ $transaksi_data->catatan }}</td>
 	  </tr>
