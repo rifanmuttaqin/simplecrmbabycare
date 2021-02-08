@@ -11,9 +11,9 @@ class CustomerService {
 
 	protected $customer;
 
-	public function __construct()
+	public function __construct(Customer $customer)
 	{
-	    $this->customer = new Customer();
+	    $this->customer = $customer;
     }
 
     /**
@@ -34,21 +34,19 @@ class CustomerService {
     /**
     * @return int
     */
-    public static function sumnewCustomer()
+    public function sumnewCustomer()
     {
-        return Customer::whereMonth('created_at', '=', date('m'))->count();
+        return $this->customer->whereMonth('created_at', '=', date('m'))->count();
     }
 
     
     /**
     * @return int
     */
-    public static function getAll($search = null)
+    public function getAll($search = null)
     {
-        $data = Customer::where('nama', 'like', '%'.$search.'%')->get();
-        return $data;
+        return $this->customer->where('nama', 'like', '%'.$search.'%')->orderBy('created_at','DESC');
     }
-
 
     /**
     * @return int

@@ -6,29 +6,30 @@ use App\Model\Customer\Customer;
 
 use App\Services\CustomerService;
 
-use App\Model\User\User;
-
 use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
 
-use App\Http\Requests\Customer\StoreCustomerRequest;
-use App\Http\Requests\Customer\UpdateCustomerRequest;
+use App\Http\Requests\Customer\{StoreCustomerRequest,UpdateCustomerRequest};
 
 use DB;
 use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
+    private $customer;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CustomerService $customer)
     {
         $this->middleware('auth');
+        $this->customer = $customer;
     }
+    
 
     /**
      * Display a listing of the resource.
@@ -39,7 +40,7 @@ class CustomerController extends Controller
     {
         if ($request->ajax()) 
         {
-            $data = CustomerService::getAll();
+            $data = $this->customer->getAll();
 
             return Datatables::of($data)
             ->addColumn('action', function($row)
@@ -92,19 +93,15 @@ class CustomerController extends Controller
     public function destroy(Request $request)
     {
         DB::beginTransaction(); 
-
-        $customer_model = Customer::findOrFail($request->param);
-
-        if($customer_model->delete())
+        
+        if(Customer::findOrFail($request->param)->delete())
         {
             DB::commit();
             return $this->getResponse(true,200,null,'Berhasil dihapus');
         }
-        else
-        {
-            DB::rollBack();
-            return $this->getResponse(false,400,null,'Gagal dihapus');
-        }
+
+        DB::rollBack();
+        return $this->getResponse(false,400,null,'Gagal update');
     }
 
 
@@ -117,19 +114,14 @@ class CustomerController extends Controller
     {
         DB::beginTransaction(); 
 
-        $customer_model = Customer::findOrFail($request->param['id'])->update($request->param);
-
-        if($customer_model)
+        if(Customer::findOrFail($request->param['id'])->update($request->param)->delete())
         {
             DB::commit();
             return $this->getResponse(true,200,null,'Berhasil update');
         }
-        else
-        {
-            DB::rollBack();
-            return $this->getResponse(false,400,null,'Gagal update');
-        }
-        
+
+        DB::rollBack();
+        return $this->getResponse(false,400,null,'Gagal update');        
     }
 
 
@@ -142,15 +134,15 @@ class CustomerController extends Controller
     {
         if($request->ajax()) 
         {
-            $data_customer  = null;
-            $data_customer  = CustomerService::getAll($request->get('search'));
-            $arr_data       = array();
+            $data_customer  = $this->customer->getAll($request->get('search'))->get();
 
-            if($data_customer != null)
+            if(isset($data_customer))
             {
-                $key = 0;
-
-                foreach ($data_customer as $data) {
+                $key            = 0;
+                $arr_data       = array();
+                
+                foreach ($data_customer as $data) 
+                {
                     $arr_data[$key]['id'] = $data->id;
                     $arr_data[$key]['text'] = $data->nama;
                     $key++;

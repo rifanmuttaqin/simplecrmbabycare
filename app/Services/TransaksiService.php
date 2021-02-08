@@ -10,22 +10,22 @@ use Auth;
 
 class TransaksiService {
 
-	protected $transksi;
+	protected $transaksi;
 
-	public function __construct()
+	public function __construct(Transaksi $transaksi)
 	{
-	    $this->transksi = new Transaksi();
+	    $this->transaksi = $transaksi;
     }
 
     /**
     * @return int
     */
-    public static function getAll($search = null, $date_start=null, $date_end=null, $customer=null) // By WA Number
+    public function getAll($search = null, $date_start=null, $date_end=null, $customer=null) // By WA Number
     {
         $date_from  = Carbon::parse($date_start)->startOfDay();
         $date_to    = Carbon::parse($date_end)->endOfDay();
 
-        $data = Transaksi::where('wa_customer', 'like', '%'.$search.'%')->orderBy('date', 'DESC');
+        $data = $this->transaksi->where('wa_customer', 'like', '%'.$search.'%')->orderBy('date', 'DESC');
 
         if($date_start != null && $date_from !=null)
         {
@@ -37,23 +37,21 @@ class TransaksiService {
             $data->where('nama_customer', $customer);
         }
         
-        return $data;
+        return $data->orderby('created_at','DESC');
     }
 
     /**
     * @return double
     */
-    public static function getTotalInvoice($date_start, $date_end)
+    public function getTotalInvoice($date_start, $date_end)
     {
-        $data = Transaksi::select('total_harga')->whereDate('date', '>=', $date_start)->whereDate('date', '<=', $date_end)->sum('total_harga');
-
-        return $data;
+        return $this->transaksi->select('total_harga')->whereDate('date', '>=', $date_start)->whereDate('date', '<=', $date_end)->sum('total_harga');
     }
 
     /**
     * @return date
     */
-    public static function formatDate($date)
+    public function formatDate($date)
     {
         return Carbon::parse($date)->format('d M Y');
     }
@@ -62,9 +60,9 @@ class TransaksiService {
     /**
     * @return int
     */
-    public static function getTotalTransaksi()
+    public function getTotalTransaksi()
     {
-        return Transaksi::whereMonth('created_at', '=', date('m'))->count();
+        return $this->transaksi->whereMonth('created_at', '=', date('m'))->count();
     }
 
 }

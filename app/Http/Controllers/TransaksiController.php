@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Services\LayananService;
-use App\Services\CustomerService;
+use App\Services\{LayananService,CustomerService};
 
-use Yajra\Datatables\Datatables;
-
-use App\Model\User\User;
 use App\Model\Customer\Customer;
 
 use App\Model\Transaksi\Transaksi;
-
-use App\Services\TransaksiService;
 
 use App\Http\Requests\Transaksi\StoreTransaksiRequest;
 
@@ -24,14 +18,17 @@ use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
+    public $layanan;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(LayananService $layanan)
     {
         $this->middleware('auth');
+        $this->layanan = $layanan;
     }
 
     /**
@@ -67,8 +64,8 @@ class TransaksiController extends Controller
                 $transaksi->nama_customer   = $customer->nama;
                 $transaksi->umur_customer   = CustomerService::countAge($customer->tgl_lahir);
                 $transaksi->nama_layanan    = 'AL BARR BABY & KIDS';
-                $transaksi->daftar_layanan  = LayananService::mergeLayanan($request->param['layanan']);
-                $transaksi->total_harga     = LayananService::getHarga($request->param['layanan']);
+                $transaksi->daftar_layanan  = $this->layanan->mergeLayanan($request->param['layanan']);
+                $transaksi->total_harga     = $this->layanan->getHarga($request->param['layanan']);
                 $transaksi->wa_customer     = $customer->telfon;
                 $transaksi->date            = $date;
                 $transaksi->nama_terapis    = $this->getUserLogin()->nama; // Bedasarkan User Login
@@ -85,5 +82,22 @@ class TransaksiController extends Controller
             }
            
         }
-    }  
+    } 
+    
+    public function destroy(Request $request)
+    {
+        if($request->ajax())
+        {
+            DB::beginTransaction(); 
+
+            if(Transaksi::findOrFail($request->param)->delete())
+            {
+                DB::commit();
+                return $this->getResponse(true,200,null,'Berhasil dihapus');
+            }
+    
+            DB::rollBack();
+            return $this->getResponse(false,400,null,'Gagal dihapus');
+        }
+    }
 }

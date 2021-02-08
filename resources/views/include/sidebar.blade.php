@@ -11,9 +11,9 @@
             <a class="nav-link" href="{{route('home')}}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
         </li>
 
-        <li>
+        {{-- <li>
             <a class="nav-link" href="#"><i class="fas fa-user-clock"></i><span>Penjadwalan</span></a>
-        </li>
+        </li> --}}
 
         @if($active == 'transaksi') <li class="active"> @else <li> @endif
             <a class="nav-link" href="{{route('transaksi')}}"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a>
@@ -54,7 +54,7 @@
         <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cog"></i> <span>Pengaturan</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="#">Kelola Pengeluaran</a></li>
+            {{-- <li><a class="nav-link" href="#">Kelola Pengeluaran</a></li> --}}
         </ul>
         </li>
 

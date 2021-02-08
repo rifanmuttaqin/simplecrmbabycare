@@ -3,20 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\File;
+
 use Illuminate\Support\Facades\Storage;
 
-use App\Http\Requests\Profile\UpdateProfileRequest;
-use App\Http\Requests\Profile\UpdatePasswordRequest;
-use App\Model\User\User;
+use App\Http\Requests\Profile\{UpdateProfileRequest,UpdatePasswordRequest};
 
+use App\Model\User\User;
 
 use Auth;
 
 use DB;
-
-use URL;
 
 use Image;
 

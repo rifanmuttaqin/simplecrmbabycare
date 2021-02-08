@@ -11,24 +11,23 @@ class LayananService {
 
 	protected $layanan;
 
-	public function __construct()
+	public function __construct(Layanan $layanan)
 	{
-	    $this->layanan = new Layanan();
+	    $this->layanan = $layanan;
     }
 
     /**
     * @return int
     */
-    public static function getAll($search = null)
+    public function getAll($search = null)
     {
-        $data = Layanan::where('nama_layanan', 'like', '%'.$search.'%')->get();
-        return $data;
+        return $this->layanan->where('nama_layanan', 'like', '%'.$search.'%');
     }
 
     /**
     * @return string
     */
-    public static function generateCodeLayanan()
+    public function generateCodeLayanan()
     {
         $chars  = "ABCDEFGHIJKLMNOPQRSTUVWXYZASJDKLAKSIDSKALUGLSJD023456789"; 
         srand((double)microtime()*1000000); 
@@ -49,12 +48,12 @@ class LayananService {
     /**
     * @return double
     */
-    public static function getHarga($param)
+    public function getHarga($param)
     {
-        $harga  = 0;
-
-        if($param != null)
+        if(isset($param))
         {
+            $harga = 0;
+
             foreach ($param as $layanan) 
             {
                 $harga += Layanan::findOrFail($layanan)->harga;
@@ -67,24 +66,19 @@ class LayananService {
     /**
     * @return boolean
     */
-    public static function checkifExist($code)
+    public function checkifExist($code)
     {
-        if(Layanan::where('kode_layanan', $code)->count() >= 1)
-        {
-            return true;
-        }
-
-        return false;
+        return $this->layanan->where('kode_layanan', $code)->count() >= 1 ? true : false;
     }
 
     /**
     * @return boolean
     */
-    public static function mergeLayanan($list_layanan)
+    public function mergeLayanan($list_layanan)
     {
         $layanan_result = '';
 
-        if($list_layanan != null)
+        if(isset($list_layanan))
         {
             foreach ($list_layanan as $service) 
             {

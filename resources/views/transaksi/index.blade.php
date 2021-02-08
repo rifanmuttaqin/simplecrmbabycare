@@ -95,6 +95,7 @@
             <th style="width: 50%">Harga</th>
             <th style="width: 50%">Tanggal</th>
             <th style="width: 50%">Catatan</th>
+            <th style="width: 30%">Aksi</th>
         </tr>
     </thead>
     </table>
@@ -198,6 +199,13 @@ function setHarga(response)
   $('#harga').val('Rp.' +response+',-');
 }
 
+function btnDel(idtransaksi)
+{
+  var url   = '{{route("transaksi-delete")}}';
+  var token = "{{ csrf_token() }}";
+  swalConfrim("Menghapus Data","Data yang telah dihapus tidak dapat untuk dikembalikan",idtransaksi,url,token);
+}
+
 $(function() {
 
 $('input[name="date"]').daterangepicker({
@@ -221,7 +229,8 @@ table = $('#transaksi_table').DataTable({
       {data: 'daftar_layanan', name: 'daftar_layanan'},
       {data: 'total_harga', name: 'total_harga'},
       {data: 'date', name: 'date'},
-      {data: 'catatan', name: 'catatan'}
+      {data: 'catatan', name: 'catatan'},
+      {data: 'action', name: 'action', orderable: false, searchable: false},
     ]
 });
 

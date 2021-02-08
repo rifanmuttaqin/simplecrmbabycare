@@ -4,29 +4,29 @@ namespace App\Http\Controllers;
 
 use Yajra\Datatables\Datatables;
 
-use App\Model\User\User;
-
 use App\Model\Layanan\Layanan;
 
 use App\Services\LayananService;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Layanan\StoreLayananRequest;
-use App\Http\Requests\Layanan\UpdateLayananRequest;
+use App\Http\Requests\Layanan\{StoreLayananRequest,UpdateLayananRequest};
 
 use DB;
 
 class LayananController extends Controller
 {
+    public $layanan;
+
  	/**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(LayananService $layanan)
     {
         $this->middleware('auth');
+        $this->layanan = $layanan;
     }
 
     /**
@@ -38,14 +38,14 @@ class LayananController extends Controller
     {
         if ($request->ajax()) 
         {
-            $data = LayananService::getAll();
+            $data = $this->layanan->getAll();
 
             return Datatables::of($data)
             ->addColumn('action', function($row)
-                {  
-                    $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
-                    return $delete; 
-                })
+            {  
+                $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><i class="fas fa-trash"></i></button>';
+                return $delete; 
+            })
             ->make(true);
         }
 
@@ -62,18 +62,14 @@ class LayananController extends Controller
     {
         DB::beginTransaction(); 
 
-        $layanan_model = Layanan::findOrFail($request->param);
-
-        if($layanan_model->delete())
+        if(Layanan::findOrFail($request->param)->delete())
         {
             DB::commit();
             return $this->getResponse(true,200,null,'Berhasil dihapus');
         }
-        else
-        {
-            DB::rollBack();
-            return $this->getResponse(false,400,null,'Gagal dihapus');
-        }
+
+        DB::rollBack();
+        return $this->getResponse(false,400,null,'Gagal dihapus');
     }
 
 
@@ -87,10 +83,9 @@ class LayananController extends Controller
         // Return Total Harga
         if($request->ajax())
         {
-            return LayananService::getHarga($request->param);
+            return $this->layanan->getHarga($request->param);
         }
     }
-
 
     /**
      * Update
@@ -101,18 +96,14 @@ class LayananController extends Controller
     {
         DB::beginTransaction(); 
 
-        $layanan_model = Layanan::findOrFail($request->param['id'])->update($request->param);
-
-        if($layanan_model)
+        if(Layanan::findOrFail($request->param['id'])->update($request->param))
         {
             DB::commit();
             return $this->getResponse(true,200,null,'Berhasil update');
         }
-        else
-        {
-            DB::rollBack();
-            return $this->getResponse(false,400,null,'Gagal update');
-        }
+
+        DB::rollBack();
+        return $this->getResponse(false,400,null,'Gagal update');
     } 
 
 
@@ -127,9 +118,9 @@ class LayananController extends Controller
 
         DB::beginTransaction(); 
 
-        $layanan_model->kode_layanan = LayananService::generateCodeLayanan();
+        $layanan_model->kode_layanan = $this->layanan->generateCodeLayanan();
 
-        if(LayananService::checkifExist($layanan_model->kode_layanan) != true)
+        if($this->layanan->checkifExist($layanan_model->kode_layanan) != true)
         {
             if(!$layanan_model->save())
             {
@@ -156,16 +147,14 @@ class LayananController extends Controller
     {
         if($request->ajax()) 
         {
-            $datas          = null;
-            $datas          = LayananService::getAll($request->get('search'));
+            $datas = $this->layanan->getAll($request->get('search'))->get();
             $arr_data       = array();
 
-            if($datas != null)
+            if(isset($datas))
             {
-                $key = 0;
-
+                $key            = 0;    
                 foreach ($datas as $data) {
-                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['id']   = $data->id;
                     $arr_data[$key]['text'] = $data->nama_layanan . ' ('.$data->harga .')';
                     $key++;
                 }

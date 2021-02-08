@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Yajra\Datatables\Datatables;
 
-use App\Services\CustomerService;
-
 use App\Services\TransaksiService;
 
 use Illuminate\Http\Request;
@@ -20,17 +18,18 @@ use Carbon\Carbon;
 
 class ReportTransaksiController extends Controller
 {
+    private $transaksi;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TransaksiService $transaksi)
     {
         $this->middleware('auth');
+        $this->transaksi = $transaksi;
     }
-
-    public $transaksi;
 
     /**
      * Display a listing of the resource.
@@ -41,11 +40,11 @@ class ReportTransaksiController extends Controller
     {
         if($request->ajax())
         {
-            $data = TransaksiService::getAll();
+            $data = $this->transaksi->getAll();
 
             return Datatables::of($data)
             ->addColumn('date', function($row){  
-                    $data = TransaksiService::formatDate($row->date);
+                    $data = $this->transaksi->formatDate($row->date);
                     return $data; 
                 })
             ->addColumn('action', function($row){
@@ -79,25 +78,16 @@ class ReportTransaksiController extends Controller
         {
             $customer   = $request->get('customer');
 
-            $date_start = null;
-            $date_end   = null;
-
-            if($request->get('dates'))
-            {
-                $date_range   = explode(" - ",$request->get('dates'));
-                $date_start   = date('Y-m-d',strtotime($date_range[0]));
-                $date_end     = date('Y-m-d',strtotime($date_range[1]));
-            }
-
-            $this->transaksi = new TransaksiService();
-            $data            = new Collection(); //Jadikan Array Collection
-
-            $model_transaksi = $this->transaksi->getAll(null,$date_start, $date_end, $customer);
+            $date_range   = explode(" - ",$request->get('dates'));
+            $date_start   = date('Y-m-d',strtotime($date_range[0]));
+            $date_end     = date('Y-m-d',strtotime($date_range[1]));
+            
+            $data            = new Collection();
+            $model_transaksi = $this->transaksi->getAll(null,$date_start, $date_end, $customer)->get();
 
             $request->session()->put('model_transaksi', $model_transaksi);
             $request->session()->put('date_start', $date_start);
             $request->session()->put('date_end', $date_end);
-
 
             foreach ($model_transaksi as $transaksi_data) 
             {
@@ -105,10 +95,10 @@ class ReportTransaksiController extends Controller
                     'id'                 => $transaksi_data->id,
                     'nama_customer'      => $transaksi_data->nama_customer,
                     'daftar_layanan'     => $transaksi_data->daftar_layanan,
-                    'nama_terapis' => $transaksi_data->nama_terapis,
-                    'total_harga'  => $transaksi_data->total_harga,
-                    'date'         => Carbon::parse($transaksi_data->date)->format('d M Y'),
-                    'catatan'      => $transaksi_data->catatan
+                    'nama_terapis'       => $transaksi_data->nama_terapis,
+                    'total_harga'        => $transaksi_data->total_harga,
+                    'date'               => Carbon::parse($transaksi_data->date)->format('d M Y'),
+                    'catatan'            => $transaksi_data->catatan
                 ]);
             }
 
@@ -138,7 +128,7 @@ class ReportTransaksiController extends Controller
         $date_start = $request->session()->get('date_start');
         $date_end = $request->session()->get('date_end');
 
-        $total_invoice = TransaksiService::getTotalInvoice($date_start, $date_end);
+        $total_invoice = $this->transaksi->getTotalInvoice($date_start, $date_end);
 
         $date_start = Carbon::parse($date_start)->format('d M Y');
         $date_end   = Carbon::parse($date_end)->format('d M Y');
