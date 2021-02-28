@@ -38,35 +38,37 @@
 
 	<table style="width:100%" class="fixed">
 
-    <thead>
+      <thead>
+            <tr>
+                  <th style="width: 5%">No</th>
+                  <th>Nama Customer</th>
+                  <th>Layanan Diambil</th>
+                  <th>Ditangani Oleh</th>
+                  <th>Tanggal</th>
+                  <th>Total Bayar</th>
+            </tr>
+      </thead>
+      <tbody>
+      
+      <?php $numb = 1; ?>
+
+      @foreach($data as $key => $transaksi_data)
+
       <tr>
-        <th>Nama Customer</th>
-        <th>Layanan Diambil</th>
-        <th>Ditangani Oleh</th>
-        <th>Tanggal</th>
-        <th>Total Bayar</th>
-        <th>Catatan</th>
+            <td> {{ $numb++ }}</td>
+            <td>{{ $transaksi_data->nama_customer }}</td>
+            <td>{{ $transaksi_data->daftar_layanan }}</td>
+            <td>{{ $transaksi_data->nama_terapis }}</td>
+            <td>{{ $transaksi->formatDate($transaksi_data->date) }}</td>
+            <td>{{ $transaksi_data->total_harga }}</td>
       </tr>
-    </thead>
-    <tbody>
 
-    @foreach($data as $transaksi_data)
+      @endforeach
 
-	  <tr>
-	    <td>{{ $transaksi_data->nama_customer }}</td>
-	    <td>{{ $transaksi_data->daftar_layanan }}</td>
-	    <td>{{ $transaksi_data->nama_terapis }}</td>
-	    <td>{{ $transaksi->formatDate($transaksi_data->date) }}</td>
-	    <td>{{ $transaksi_data->total_harga }}</td>
-	    <td>{{ $transaksi_data->catatan }}</td>
-	  </tr>
-
-	@endforeach
-
-	 <tr>
-	    <td colspan="4"><strong>Jumlah</strong></td>
-	    <td colspan="2">{{ $total_invoice }}</td>
-	 </tr>
+      <tr>
+      <td colspan="4"><strong>Jumlah</strong></td>
+      <td colspan="2">{{ $total_invoice }}</td>
+      </tr>
     
     </tbody>
   </table>
